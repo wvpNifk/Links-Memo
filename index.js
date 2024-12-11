@@ -4,6 +4,8 @@ const inEl = document.getElementById("in")
 const but = document.getElementById("in-but")
 const unorder = document.getElementById("uorder")
 const clear = document.getElementById("clear")
+const tab = document.getElementById("tab")
+
 function render() {
     unorder.innerHTML = ""; 
     for (let i = 0; i < arr.length; i++) {
@@ -19,6 +21,16 @@ but.addEventListener("click", function(){
     localStorage.setItem("tabsMem",JSON.stringify(arr));
     inEl.value= ""
     render()
+   
+})
+tab.addEventListener("click",function(){
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        if(tabs.length > 0){
+        arr.push(tabs[0].url)
+        localStorage.setItem("tabsMem",JSON.stringify(arr));
+        inEl.value= ""
+        render()}
+      });
    
 })
 
